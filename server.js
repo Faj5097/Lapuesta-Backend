@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Player = require("./player.model.js");
+const MatchUp = require("./matchUp.model.js");
 const PORT = 4000;
 
 app.use(cors());
@@ -43,6 +44,41 @@ app.route("/players/:playersId").get(function(req, res){
     Player.findById(req.params.playersId, function(err, playerFound){
       if(playerFound){
         res.json(playerFound);
+      }
+      else{
+        console.log(err);
+      }
+    });
+  })
+;
+
+app.get("/matchUps", function(req, res){
+    MatchUp.find(function(err, matchUpsFound){
+      if(!err){
+        res.json(playersFound);
+      }
+      else{
+        console.log(err);
+      }
+    })
+  });
+
+app.post("/matchUps", function(req, res){
+    const newMatchUp = new MatchUp(req.body);
+    newMatchUp.save(function(err){
+      if(!err){
+        res.status(200).send("Successfully added new Player!");
+      }
+      else{
+        res.status(400).send(err);
+      }
+    });
+});
+
+app.route("/matchUps/:matchUpsId").get(function(req, res){
+    MatchUp.findById(req.params.playersId, function(err, matchUpFound){
+      if(matchUpFound){
+        res.json(matchUpFound);
       }
       else{
         console.log(err);
