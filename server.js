@@ -55,7 +55,7 @@ app.route("/players/:playersId").get(function(req, res){
 app.get("/matchUps", function(req, res){
     MatchUp.find(function(err, matchUpsFound){
       if(!err){
-        res.json(playersFound);
+        res.json(matchUpsFound);
       }
       else{
         console.log(err);
