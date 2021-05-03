@@ -46,7 +46,7 @@ const MatchUp = new Schema({
         name: String,
         stars: Number
       },
-      player1: {
+      player2: {
         name: String,
         winsBefore: Number,
         drawsBefore: Number,

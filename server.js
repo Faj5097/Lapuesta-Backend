@@ -40,7 +40,7 @@ app.post("/players", function(req, res){
     });
 });
 
-app.route("/players/:playersId").get(function(req, res){
+app.get("/players/:playersId", function(req, res){
     Player.findById(req.params.playersId, function(err, playerFound){
       if(playerFound){
         res.json(playerFound);
@@ -51,6 +51,22 @@ app.route("/players/:playersId").get(function(req, res){
     });
   })
 ;
+
+
+app.patch("/players/:playerId", function(req, res){
+    console.log(req.body);
+    Player.update(
+      {_id: req.params.playerId},
+      {$set: req.body},
+      function(err){
+        if(!err){
+          res.send("Successfully patched Player!");
+        }
+        else{
+          res.send(err);
+        }
+      })
+});
 
 app.get("/matchUps", function(req, res){
     MatchUp.find(function(err, matchUpsFound){
@@ -67,7 +83,7 @@ app.post("/matchUps", function(req, res){
     const newMatchUp = new MatchUp(req.body);
     newMatchUp.save(function(err){
       if(!err){
-        res.status(200).send("Successfully added new Player!");
+        res.status(200).send("Successfully added new MatchUp!");
       }
       else{
         res.status(400).send(err);
@@ -75,8 +91,8 @@ app.post("/matchUps", function(req, res){
     });
 });
 
-app.route("/matchUps/:matchUpsId").get(function(req, res){
-    MatchUp.findById(req.params.playersId, function(err, matchUpFound){
+app.get("/matchUps/:matchUpId", function(req, res){
+    MatchUp.findById(req.params.matchUpId, function(err, matchUpFound){
       if(matchUpFound){
         res.json(matchUpFound);
       }
@@ -86,6 +102,22 @@ app.route("/matchUps/:matchUpsId").get(function(req, res){
     });
   })
 ;
+
+app.patch("/matchUps/:matchUpId", function(req, res){
+  console.log(req.body);
+    MatchUp.update(
+      {_id: req.params.matchUpId},
+      {$set: req.body},
+      {overwrite: true},
+      function(err){
+        if(!err){
+          res.send("Successfully updated MatchUp!");
+        }
+        else{
+          res.send(err);
+        }
+      })
+  });
 
 app.listen(PORT, function() {
   console.log("Server is running on Port: " + PORT);
