@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const Player = require("./player.model.js");
 const MatchUp = require("./matchUp.model.js");
+const Team = require("./team.model.js");
 const PORT = 4000;
 
 app.use(cors());
@@ -118,6 +119,17 @@ app.patch("/matchUps/:matchUpId", function(req, res){
         }
       })
   });
+
+  app.get("/teams", function(req, res){
+      Team.find(function(err, teamsFound){
+        if(!err){
+          res.json(teamsFound);
+        }
+        else{
+          console.log(err);
+        }
+      })
+    });
 
 app.listen(PORT, function() {
   console.log("Server is running on Port: " + PORT);
