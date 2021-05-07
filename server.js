@@ -8,6 +8,7 @@ const Player = require("./player.model.js");
 const MatchUp = require("./matchUp.model.js");
 const Team = require("./team.model.js");
 const PORT = 4000;
+const Odds = require("./odds");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -81,7 +82,11 @@ app.get("/matchUps", function(req, res){
   });
 
 app.post("/matchUps", function(req, res){
-    const newMatchUp = new MatchUp(req.body);
+    let newMatchUp = new MatchUp(req.body);
+    
+    //calculate Odds
+    newMatchUp = Odds(newMatchUp);
+
     newMatchUp.save(function(err){
       if(!err){
         res.status(200).send("Successfully added new MatchUp!");
