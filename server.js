@@ -32,14 +32,19 @@ app.get("/players", function(req, res){
 
 app.post("/players", function(req, res){
     const newPlayer = new Player(req.body);
-    newPlayer.save(function(err){
-      if(!err){
-        res.status(200).send("Successfully added new Player!");
-      }
-      else{
-        res.status(400).send(err);
-      }
-    });
+
+    Player.updateOne(
+      {nickname: req.body.nickname},
+      {$set: req.body},
+      {upsert: true},
+      function(err){
+        if(!err){
+          res.send("Successfully inserted Player!");
+        }
+        else{
+          res.send(err);
+        }
+      });
 });
 
 app.get("/players/:playersId", function(req, res){
@@ -83,7 +88,7 @@ app.get("/matchUps", function(req, res){
 
 app.post("/matchUps", function(req, res){
     let newMatchUp = new MatchUp(req.body);
-    
+
     //calculate Odds
     newMatchUp = Odds(newMatchUp);
 
