@@ -89,8 +89,21 @@ app.get("/matchUps", function(req, res){
 app.post("/matchUps", function(req, res){
     let newMatchUp = new MatchUp(req.body);
 
+    const player1Name = newMatchUp.teams.home.player1.name;
+    console.log(player1Name);
+    const player1JSON = {};
+    Player.find(function({nickname: player1Name}, err, player1){
+      player1JSON = player1;
+    });
+
+    const player2Name = newMatchUp.teams.away.player2.name;
+    const player2JSON = {};
+    Player.find(function({nickname: player2Name}, err, player2){
+      player2JSON = player2
+    })
+
     //calculate Odds
-    newMatchUp = Odds(newMatchUp);
+    newMatchUp = Odds(newMatchUp, player1JSON, player2JSON);
 
     newMatchUp.save(function(err){
       if(!err){
