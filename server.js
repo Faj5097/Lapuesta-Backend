@@ -86,26 +86,29 @@ app.get("/matchUps", function(req, res){
     })
   });
 
-app.post("/matchUps", function(req, res){
+app.post("/matchUps", async function(req, res){
     let newMatchUp = new MatchUp(req.body);
 
     const player1Name = newMatchUp.teams.home.player1.name;
-    console.log(player1Name);
-    const player1JSON = {};
-    Player.find(function({nickname: player1Name}, err, player1){
-      player1JSON = player1;
+    const player2Name = newMatchUp.teams.away.player2.name;
+    let playerJSON = [];
+
+    console.log("PLAYER 1 NAME: " + player1Name);
+    await Player.find({$or:[{nickname: player1Name},{nickname: player2Name}]} , function(err, players){
+      if(!err){
+        console.log("--- PLAYERS ---");
+        console.log(players);
+        playerJSON = players;
+      }
+      else{
+        console.log(err);
+      }
     });
 
-    const player2Name = newMatchUp.teams.away.player2.name;
-    const player2JSON = {};
-    Player.find(function({nickname: player2Name}, err, player2){
-      player2JSON = player2
-    })
-
     //calculate Odds
-    newMatchUp = Odds(newMatchUp, player1JSON, player2JSON);
+    newMatchUp = await Odds(newMatchUp, playerJSON.filter((player) => player.nickname === player1Name)[0], playerJSON.filter((player) => player.nickname === player2Name)[0]);
 
-    newMatchUp.save(function(err){
+    await newMatchUp.save(function(err){
       if(!err){
         res.status(200).send("Successfully added new MatchUp!");
       }

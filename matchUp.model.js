@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const MatchUp = new Schema({
+var MatchUp = new Schema({
   dateTimeOfMatchUp: Date,
   alreadyPlayed: Boolean,
   result: {
