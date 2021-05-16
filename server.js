@@ -146,6 +146,19 @@ app.patch("/matchUps/:matchUpId", function(req, res){
       })
   });
 
+app.delete("/matchUps/:matchUpId", function(req, res){
+  MatchUp.findOneAndDelete(
+    {_id: req.params.matchUpId},
+    function(err){
+      if(!err){
+        res.send("Successfully deleted MatchUp!");
+      }
+      else{
+        res.send(err);
+      }
+    })
+})
+
   app.get("/teams", function(req, res){
       Team.find(function(err, teamsFound){
         if(!err){
