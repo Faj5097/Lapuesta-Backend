@@ -19,6 +19,9 @@ app.use(express.static("public"));
 
 mongoose.connect('mongodb://localhost:27017/fifaDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
+//---------------------
+//----- PLAYERS -------
+//---------------------
 app.get("/players", function(req, res){
     Player.find(function(err, playersFound){
       if(!err){
@@ -56,15 +59,14 @@ app.get("/players/:playersId", function(req, res){
         console.log(err);
       }
     });
-  })
-;
-
+  });
 
 app.patch("/players/:playerId", function(req, res){
     console.log(req.body);
     Player.update(
       {_id: req.params.playerId},
       {$set: req.body},
+      {overwrite: true},
       function(err){
         if(!err){
           res.send("Successfully patched Player!");
@@ -75,6 +77,9 @@ app.patch("/players/:playerId", function(req, res){
       })
 });
 
+//---------------------
+//---- MATCH UP -------
+//---------------------
 app.get("/matchUps", function(req, res){
     MatchUp.find(function(err, matchUpsFound){
       if(!err){
@@ -127,8 +132,7 @@ app.get("/matchUps/:matchUpId", function(req, res){
         console.log(err);
       }
     });
-  })
-;
+  });
 
 app.patch("/matchUps/:matchUpId", function(req, res){
   console.log(req.body);
@@ -159,16 +163,20 @@ app.delete("/matchUps/:matchUpId", function(req, res){
     })
 })
 
-  app.get("/teams", function(req, res){
-      Team.find(function(err, teamsFound){
-        if(!err){
-          res.json(teamsFound);
-        }
-        else{
-          console.log(err);
-        }
-      })
-    });
+
+//---------------------
+//------ TEAMS --------
+//---------------------
+app.get("/teams", function(req, res){
+  Team.find(function(err, teamsFound){
+    if(!err){
+      res.json(teamsFound);
+    }
+    else{
+      console.log(err);
+    }
+  })
+});
 
 app.listen(PORT, function() {
   console.log("Server is running on Port: " + PORT);
