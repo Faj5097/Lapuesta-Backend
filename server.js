@@ -8,7 +8,7 @@ const mongoose = require("mongoose");
 const Player = require("./player.model.js");
 const MatchUp = require("./matchUp.model.js");
 const Team = require("./team.model.js");
-const PORT = 4000;
+// const PORT = 4000;
 const Odds = require("./odds");
 
 app.use(cors());
@@ -180,6 +180,10 @@ app.get("/teams", function(req, res){
   })
 });
 
-app.listen(PORT, function() {
-  console.log("Server is running on Port: " + PORT);
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
+app.listen(port, function() {
+  console.log("Server is running on Port: " + port);
 });
