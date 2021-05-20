@@ -1,4 +1,5 @@
 //jshint esversion:6
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -17,7 +18,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
-mongoose.connect('mongodb://localhost:27017/fifaDB', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/fifaDB', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASSWORD + "@cluster0.iyucu.mongodb.net/" + process.env.DB_NAME + "?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true});
 
 //---------------------
 //----- PLAYERS -------
