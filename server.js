@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // mongoose.connect('mongodb://localhost:27017/fifaDB', {useNewUrlParser: true, useUnifiedTopology: true});
-mongoose.connect(process.env.DB_STRING, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb+srv://admin-db:Hexagon150@cluster0.iyucu.mongodb.net/fifaDB", {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.get('/', function( req, res) { res.send('Hello from Express!')});
 //---------------------
