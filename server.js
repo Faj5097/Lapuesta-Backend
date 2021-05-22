@@ -26,15 +26,15 @@ app.get('/', function( req, res) { res.send('Hello from Express!')});
 //----- PLAYERS -------
 //---------------------
 app.get("/players", function(req, res){
-    Player.find(function(err, playersFound){
-      if(!err){
-        // res.json(playersFound);
-        res.send("La le lu");
-      }
-      else{
-        res.send(err);
-      }
-    })
+  res.send("La le lu");
+    // Player.find(function(err, playersFound){
+    //   if(!err){
+    //     // res.json(playersFound);
+    //   }
+    //   else{
+    //     res.send(err);
+    //   }
+    // })
   });
 
 app.post("/players", function(req, res){
