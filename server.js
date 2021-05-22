@@ -28,7 +28,8 @@ app.get('/', function( req, res) { res.send('Hello from Express!')});
 app.get("/players", function(req, res){
     Player.find(function(err, playersFound){
       if(!err){
-        res.json(playersFound);
+        // res.json(playersFound);
+        res.send("La le lu");        
       }
       else{
         console.log(err);
