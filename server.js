@@ -29,10 +29,10 @@ app.get("/players", function(req, res){
     Player.find(function(err, playersFound){
       if(!err){
         // res.json(playersFound);
-        res.send("La le lu");        
+        res.send("La le lu");
       }
       else{
-        console.log(err);
+        res.send(err);
       }
     })
   });
