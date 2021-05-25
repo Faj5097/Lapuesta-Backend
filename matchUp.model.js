@@ -25,20 +25,7 @@ var MatchUp = new Schema({
         stars: Number
       },
       player1: {
-        name: String,
-        winsBefore: Number,
-        drawsBefore: Number,
-        losesBefore: Number,
-        goals: {
-          scored: {
-            allTime: Number,
-            thisMatchUp: Number
-          },
-          conceded: {
-            allTime: Number,
-            thisMatchUp: Number
-          }
-        }
+        name: String
       }
     },
     away: {
@@ -47,20 +34,7 @@ var MatchUp = new Schema({
         stars: Number
       },
       player2: {
-        name: String,
-        winsBefore: Number,
-        drawsBefore: Number,
-        losesBefore: Number,
-        goals: {
-          scored: {
-            allTime: Number,
-            thisMatchUp: Number
-          },
-          conceded: {
-            allTime: Number,
-            thisMatchUp: Number
-          }
-        }
+        name: String
       }
     }
   }
